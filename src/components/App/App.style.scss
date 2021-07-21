@@ -1,0 +1,62 @@
+@import "reset-css";
+
+* {
+  box-sizing: border-box;
+}
+
+// scrollbar
+*::-webkit-scrollbar {
+  width: 0.5rem;
+}
+*::-webkit-scrollbar-track {
+  background: #eee;
+}
+*::-webkit-scrollbar-thumb {
+  background: #999;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+*::-webkit-scrollbar-thumb:active {
+  background-color: #666;
+}
+
+body {
+  background-color: #e8edf1;
+  color: #081d2e;
+  font-family: "Montserrat", sans-serif;
+  width: 100%;
+}
+
+.app {
+  // padding: 0 0.5em;
+  max-width: 1360px;
+  width: 95%;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+.ht1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.ht2 {
+  margin: 1.5em 0;
+  font-family: "Abril Fatface", cursive;
+  font-size: 2rem;
+}
+
+.ht3 {
+  font-weight: 600;
+  margin: 1em 0;
+}
+
+.prgph {
+  font-size: 0.85rem;
+  line-height: 200%;
+}
+
+input {
+  font-weight: bold;
+  font-family: "Montserrat", sans-serif;
+}
