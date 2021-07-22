@@ -1,16 +1,19 @@
+// React
 import React, { useEffect } from "react";
-// Styling & animation
-import styled from "styled-components";
-import { motion } from "framer-motion";
+
 // Routing
 import { withRouter } from "react-router-dom";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { actionsFetchGameDetails, gameDetailsUnmount } from "../../actions";
-// utils
+
+// utils function
 import { transformImage } from "../../utils";
+import { withService } from "../../components/HOC";
+
 // Components
 import Spinner from "../Spinner";
+
 // IMAGES
 import xboxOne from "../../img/xbox-one.svg";
 import xboxSeriesX from "../../img/xbox-series-x.svg";
@@ -22,9 +25,13 @@ import macos from "../../img/macos.svg";
 import ios from "../../img/ios.svg";
 import gamepad from "../../img/gamepad.svg";
 import pc from "../../img/pc.svg";
-// STARIMAGES
+// STAR IMAGES
 import starEmpty from "../../img/star-empty.png";
 import starFull from "../../img/star-full.png";
+
+// Styling & animation
+import styled from "styled-components";
+import { motion } from "framer-motion";
 
 const GameListStyle = styled(motion.div)`
   width: 100%;
@@ -123,14 +130,14 @@ const platformsImageData = {
   others: gamepad,
 };
 
-const GameDetails = ({ idItem, history }) => {
+const GameDetails = ({ idItem, history, service }) => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actionsFetchGameDetails(idItem));
+    dispatch(actionsFetchGameDetails(service, idItem));
     return () => dispatch(gameDetailsUnmount());
-  }, [idItem, dispatch]);
-  const { details, loading } = useSelector((state) => state.gameDetails);
+  }, [idItem, dispatch, service]);
 
+  const { details, loading } = useSelector((state) => state.gameDetails);
   if (loading) {
     return (
       <GameListStyle>
@@ -170,10 +177,10 @@ const GameDetails = ({ idItem, history }) => {
     }
   };
   // rendering stars rating
-  const getStars = () => {
+  const getStars = (() => {
     const stars = [];
     const rating = Math.floor(details.rating);
-    for (var i = 0; i < 5; i++) {
+    for (var i = 1; i <= 5; i++) {
       if (i <= rating) {
         stars.push(<img alt="star" key={i} src={starFull}></img>);
       } else {
@@ -181,7 +188,7 @@ const GameDetails = ({ idItem, history }) => {
       }
     }
     return stars;
-  };
+  })();
 
   return (
     <GameListStyle className="game-details" onClick={exitDetailHandler}>
@@ -190,7 +197,7 @@ const GameDetails = ({ idItem, history }) => {
           <div className="rating">
             <h3 className="ht3">{details.name}</h3>
             <p className="prgph">Rating: {details.rating}</p>
-            {getStars()}
+            {getStars}
           </div>
           <Info>
             <h3 className="ht3">Platforms</h3>
@@ -212,4 +219,4 @@ const GameDetails = ({ idItem, history }) => {
   );
 };
 
-export default withRouter(GameDetails);
+export default withService()(withRouter(GameDetails));

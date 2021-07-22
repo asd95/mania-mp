@@ -1,3 +1,4 @@
+// React
 import React, { useEffect } from "react";
 
 // Redux
@@ -6,16 +7,20 @@ import { actionsFetchGames } from "../../actions";
 
 // components & pages
 import GameList from "../../components/GameList/GameList";
-import "./Home.style.scss";
 
-const Home = () => {
+// utils function
+import { withService } from "../../components/HOC";
+
+const Home = ({ service }) => {
   const dispatch = useDispatch();
-  const games = useSelector((state) => state.games);
   useEffect(() => {
-    dispatch(actionsFetchGames());
-  }, [dispatch]);
+    dispatch(actionsFetchGames(service));
+  }, [dispatch, service]);
 
-  const { popular, newGames, upcoming, searched } = games;
+  const { popular, newGames, upcoming, searched } = useSelector(
+    (state) => state.games
+  );
+
   return (
     <div className="home">
       {searched.length === 0 ? null : (
@@ -28,4 +33,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withService()(Home);

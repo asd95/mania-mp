@@ -1,4 +1,6 @@
+// React
 import React from "react";
+
 // Styling & animation
 import styled from "styled-components";
 import { motion } from "framer-motion";
@@ -23,6 +25,7 @@ const GameItem = ({ name, released, id, image, onDetailsGame }) => {
     onDetailsGame(id);
     document.body.style.overflow = "hidden";
   };
+  
   return (
     <GameItemStyle onClick={() => onSelectItem(id)}>
       <h3 className="ht3">{name}</h3>

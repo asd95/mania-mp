@@ -1,12 +1,17 @@
+// React
 import React, { useState } from "react";
-import "./Header.style.scss";
-// Animation
+
+// Redux & routes
+import { actionsFetchSearchedGames, searchedDefault } from "../../actions";
+import { useDispatch } from "react-redux";
+
+// utils function
+import { withService } from "../../components/HOC";
+
+// // Styling & animation
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import logo from "../../img/logo.svg";
-// Redux & routes
-import { actionsFetchSearchedGames } from "../../actions";
-import { useDispatch } from "react-redux";
 
 const HeaderStyle = styled(motion.nav)`
   padding: 2em 0;
@@ -54,7 +59,7 @@ const Logo = styled(motion.div)`
   }
 `;
 
-const Header = () => {
+const Header = ({service}) => {
   const dispatch = useDispatch();
   const [inputText, setInputText] = useState("");
 
@@ -63,7 +68,7 @@ const Header = () => {
     if (!inputText) {
       return;
     }
-    dispatch(actionsFetchSearchedGames(inputText.toLowerCase()));
+    dispatch(actionsFetchSearchedGames(service, inputText.toLowerCase()));
     setInputText("");
   };
 
@@ -73,7 +78,7 @@ const Header = () => {
 
   return (
     <HeaderStyle>
-      <Logo>
+      <Logo onClick={() => dispatch(searchedDefault())}>
         <img src={logo} alt="logo" />
         <h1 className="ht1">MANIA</h1>
       </Logo>
@@ -87,4 +92,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default withService()(Header);

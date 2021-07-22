@@ -1,14 +1,18 @@
+// React
 import React from "react";
+
+// components
+import GameItem from "../GameItem";
+
+// Routing
+import { withRouter } from "react-router-dom";
+
+// utils function
+import {transformImage} from '../../utils';
+
 // Styling & animation
 import styled from "styled-components";
 import { motion } from "framer-motion";
-// components
-import GameItem from "../GameItem";
-// Routing
-import { withRouter } from "react-router-dom";
-// utils
-import {transformImage} from '../../utils';
-
 
 const GameListStyle = styled(motion.div)`
   min-height: 100%;
@@ -27,6 +31,7 @@ const ListStyle = styled(motion.div)`
 `;
 
 const GameList = ({ children, titleName, history }) => {
+  
   const items = children.map((item, idx) => (
     <GameItem
       key={idx}
